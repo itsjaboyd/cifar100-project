@@ -10,11 +10,7 @@
 # file to ensure everything is set up and working as it should.
 #=================================================================
 
-import json
-import random
-import sys
-import numpy as np
-import unittest
+import time
 import tensorflow as tf
 import tflearn
 import tflearn.datasets.cifar100 as cifar100
@@ -47,6 +43,8 @@ MODEL_NAME = 'testing_convnet.tfl'
 
 def main():
     create_save_convnet()
+    print("sleeping . . .")
+    time.sleep(2)
     load_test_convnet()
     
 
@@ -61,7 +59,7 @@ def create_save_convnet():
         testY,
         MODEL_NAME, 
         NET_PATH,
-        n_epoch=5, 
+        n_epoch=1, 
         mbs=10
     )
 
@@ -69,13 +67,12 @@ def load_test_convnet():
     tf.reset_default_graph()
     model_path = NET_PATH + MODEL_NAME
     model_tfl_convnet = load_tfl_convnet(model_path)
-    print(model_tfl_convnet)
     acc = test_tfl_model(
-        test_tfl_model,
+        model_tfl_convnet,
         validX,
         validY
     )
-    print(f"{MODEL_NAME} accuracy -> {acc}")
+    print(f"{MODEL_NAME} accuracy -> {acc * 100}%")
 
 
 if __name__ == "__main__":
