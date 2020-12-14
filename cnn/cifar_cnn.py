@@ -17,7 +17,6 @@ import tflearn
 from tflearn.layers.core import input_data, fully_connected, dropout
 from tflearn.layers.conv import conv_2d, max_pool_2d
 from tflearn.layers.estimator import regression
-import tflearn.datasets.cifar100 as cifar100
 
 # define build and load convolutional network structures
 
