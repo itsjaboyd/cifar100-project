@@ -80,7 +80,7 @@ def make_cifar_convnet():
         optimizer='sgd',
         loss='categorical_crossentropy', 
         learning_rate=0.01)
-    model = tflearn.DNN(network)
+    model = tflearn.DNN(network, tensorboard_verbose=3)
     return model
 
 
@@ -137,7 +137,7 @@ def load_cifar_convnet(model_path):
 
 def fit_tfl_model(model, trainX, trainY, testX, testY, 
     model_name, n_epoch=5, mbs=10):
-    model.fit(
+    results = model.fit(
         trainX, 
         trainY, 
         n_epoch=n_epoch, 
@@ -149,6 +149,7 @@ def fit_tfl_model(model, trainX, trainY, testX, testY,
         batch_size=mbs, 
         run_id=model_name
     )
+    return results
 
 def test_tfl_model(model, X, Y):
     computed_correctly = 0

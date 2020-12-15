@@ -14,6 +14,7 @@ import os
 import time
 import unittest
 import tensorflow as tf
+import matplotlib.pylab as plt
 import tflearn
 import tflearn.datasets.cifar100 as cifar100
 from cifar_cnn import *
@@ -27,7 +28,7 @@ NET_PATH = 'nets/cnn/'
 MODEL_NAME = 'cnn_cifar100_model.tfl'
 
 # define how long network should train before checking accuracy
-EPISODE_SIZE = 5
+EPISODE_SIZE = 1
 
 # validation split: split total training data into smaller 
 # training and validation data.
@@ -74,6 +75,7 @@ def train_cifar_convnet(model):
     model_path = NET_PATH + MODEL_NAME
     training = True
     start_time = int(time.time() * 1000)
+    temp = 1
     while training:
         current_best = 0.0
         fit_tfl_model(
@@ -101,7 +103,16 @@ def train_cifar_convnet(model):
             print("-------------------------------------------------")
             print(f"No accuracy improvement over epoch episode.")
             print(f"Training terminated wtih accuracy: {found_best}")
-            print("-------------------------------------------------")       
+            print("-------------------------------------------------")  
+
+        if temp == 0:
+            training = False
+            found_best = round(current_best * 100, 2)
+            print("-------------------------------------------------")
+            print(f"No accuracy improvement over epoch episode.")
+            print(f"Training terminated wtih accuracy: {found_best}")
+            print("-------------------------------------------------")
+        temp -= 1
 
     finish_time = int(time.time() * 1000)
     return finish_time - start_time
