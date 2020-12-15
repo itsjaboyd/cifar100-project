@@ -17,14 +17,31 @@ version is the one and only option. The folder that TensorFlow creates is `cifar
 so avoid modifying any files within this directory.
 
 ### Project Structure
-The project is structured around each different type of neural network. The convolutional,
-artificial, and random forest networks each have their own directory for source code:
-`cnn/`, `ann/`, and `raf/` respectively. As mentioned before, TensorFlow's dataset source
-files reside in `cifar-100-python/`. Each fully trained network resides in the `nets/`
-directory, where the project takes each network for testing and statistical analysis.
-The file `cifar.py` is the overarching driver for which the project is executed. Of course
-this file `README.md` is for documentation and project details, and the project includes 
-a `.gitignore` for version control purposes.
+There were three planned files for each network type originally in the project proposal.
+After thinking and designing out the project, a different route was taken in structure
+to include multiple different files for each network type that included network designs,
+driver code, and unit testing. The project is structured around each different type of 
+neural network. The convolutional, artificial, and random forest networks each have their 
+own directory for source code: `cnn/`, `ann/`, and `raf/` respectively. 
+
+As mentioned before, TensorFlow's dataset source files reside in `cifar-100-python/`. Each 
+fully trained network resides in the `nets/` directory, where the project takes each network 
+for testing and statistical analysis. The file `cifar.py` is the overarching driver for which 
+the project is executed. Of course this file `README.md` is for documentation and project 
+details, and the project includes  a `.gitignore` for version control purposes.
+
+## Running the Project
+There exists an executive driver file `cifar.py` in the top level directory that ties together
+all implementations from each subdirectory. There are multiple options to run the project, and
+each method is explained below in detail, however the option intended for grading purposes and
+viewing purposes is simply loading and testing the already supplied trained networks. 
+
+1. **Loading and testing trained networks**
+
+This method serves as the primary function of viewing this project. 
+
+2. **Miniature scale network creation and training**
+
 
 ## Artificial Neural Networks
 

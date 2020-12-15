@@ -31,14 +31,14 @@ def make_cifar_convnet():
     """
     input_layer = input_data(shape=[None, 32, 32, 3])
     conv_layer_1 = conv_2d(
-        input_layer, 
-        nb_filter=32, 
+        input_layer,
+        nb_filter=32,
         filter_size=3,
-        activation='relu', 
+        activation='relu',
         name='conv_layer_1')
     pool_layer_1 = max_pool_2d(
-        conv_layer_1, 
-        2, 
+        conv_layer_1,
+        2,
         name='pool_layer_1')
     conv_layer_2 = conv_2d(
         pool_layer_1,
@@ -57,13 +57,13 @@ def make_cifar_convnet():
         activation='relu',
         name='conv_layer_2')
     pool_layer_3 = max_pool_2d(
-        conv_layer_2,
+        conv_layer_3,
         2,
         name='pool_layer_3')
     fc_layer_1 = fully_connected(
-        pool_layer_2, 
-        256, 
-        activation='relu', 
+        pool_layer_3,
+        256,
+        activation='relu',
         name='fc_layer_1')
     fc_layer_2 = fully_connected(
         fc_layer_1,
@@ -82,7 +82,6 @@ def make_cifar_convnet():
         learning_rate=0.01)
     model = tflearn.DNN(network, tensorboard_verbose=3)
     return model
-
 
 def load_cifar_convnet(model_path):
     input_layer = input_data(shape=[None, 32, 32, 3])
@@ -113,11 +112,11 @@ def load_cifar_convnet(model_path):
         activation='relu',
         name='conv_layer_2')
     pool_layer_3 = max_pool_2d(
-        conv_layer_2,
+        conv_layer_3,
         2,
         name='pool_layer_3')
     fc_layer_1 = fully_connected(
-        pool_layer_2,
+        pool_layer_3,
         256,
         activation='relu',
         name='fc_layer_1')
@@ -132,6 +131,121 @@ def load_cifar_convnet(model_path):
         activation='softmax',
         name='fc_layer_3')
     model = tflearn.DNN(fc_layer_3)
+    model.load(model_path)
+    return model
+
+def make_shallower_convnet():
+    """
+    This convolutaional network design is purely meant
+    for using and testing the system to make sure each
+    component network type works within the main driver.
+    Obviously this network will perform rather horribly
+    on the dataset due to how shallow its design is.
+    """
+    input_layer = input_data(shape=[None, 32, 32, 3])
+    conv_layer_1 = conv_2d(
+        input_layer,
+        nb_filter=20,
+        filter_size=5,
+        activation='relu',
+        name='conv_layer_1')
+    pool_layer_1 = max_pool_2d(
+        conv_layer_1,
+        2,
+        name='pool_layer_1')
+    fc_layer_1 = fully_connected(
+        pool_layer_1,
+        100,
+        activation='softmax',
+        name='fc_layer_1')
+    network = regression(
+        fc_layer_3,
+        optimizer='sgd',
+        loss='categorical_crossentropy',
+        learning_rate=0.1)
+    model = tflearn.DNN(network)
+    return model
+
+def load_shallower_convnet(model_path):
+    input_layer = input_data(shape=[None, 32, 32, 3])
+    conv_layer_1 = conv_2d(
+        input_layer,
+        nb_filter=20,
+        filter_size=5,
+        activation='relu',
+        name='conv_layer_1')
+    pool_layer_1 = max_pool_2d(
+        conv_layer_1,
+        2,
+        name='pool_layer_1')
+    fc_layer_1 = fully_connected(
+        pool_layer_1,
+        100,
+        activation='softmax',
+        name='fc_layer_1')
+    model = tflearn.DNN(fc_layer_1)
+    model.load(model_path)
+    return model
+
+def make_example_convnet():
+    """
+    This convolutional network design came straight
+    from homework five and slide 22 from the lecture
+    notes in the convolutional section. Again this
+    architecture was used for testing purposes.
+    """
+    input_layer = input_data(shape=[None, 32, 32, 3]) 
+    conv_layer = conv_2d(
+        input_layer, 
+        nb_filter=20, 
+        filter_size=5, 
+        activation='sigmoid', 
+        name='conv_layer_1')
+    pool_layer = max_pool_2d(
+        conv_layer,
+         2, 
+         name='pool_layer_1') 
+    fc_layer_1 = fully_connected(
+        pool_layer, 
+        200, 
+        activation='sigmoid', 
+        name='fc_layer_1')
+    fc_layer_2 = fully_connected(
+        fc_layer_1, 
+        100, 
+        activation='softmax', 
+        name='fc_layer_2')
+    network = regression(
+        fc_layer_2, 
+        optimizer='sgd', 
+        loss='categorical_crossentropy', 
+        learning_rate=0.1)
+    model = tflearn.DNN(network)
+    return model
+
+def load_example_convnet(model_path):
+    input_layer = input_data(shape=[None, 32, 32, 3])
+    conv_layer = conv_2d(
+        input_layer, 
+        nb_filter=20, 
+        filter_size=5, 
+        activation='sigmoid', 
+        name='conv_layer_1')
+    pool_layer = max_pool_2d(
+        conv_layer,
+         2, 
+         name='pool_layer_1') 
+    fc_layer_1 = fully_connected(
+        pool_layer, 
+        200, 
+        activation='sigmoid', 
+        name='fc_layer_1')
+    fc_layer_2 = fully_connected(
+        fc_layer_1, 
+        100, 
+        activation='softmax', 
+        name='fc_layer_2')
+    model = tflearn.DNN(fc_layer_2)
     model.load(model_path)
     return model
 

@@ -8,7 +8,7 @@
 #=================================================================
 
 import unittest
-from cifar_cnn_driver import *
+from cnn.cifar_cnn_driver import *
 
 class cifar_cnn_uts(unittest.TestCase):
     # tests for milliseconds to timestamp function

@@ -17,18 +17,18 @@ import tensorflow as tf
 import matplotlib.pylab as plt
 import tflearn
 import tflearn.datasets.cifar100 as cifar100
-from cifar_cnn import *
-import cifar_cnn_uts
+from cnn.cifar_cnn import *
+import cnn.cifar_cnn_uts
 
 ### Silence annoying tensorflow logging statements
 tf.logging.set_verbosity(tf.logging.ERROR)
 
 # define name and path where nets should be saved
-NET_PATH = 'nets/cnn/'
-MODEL_NAME = 'cnn_cifar100_model.tfl'
+CNN_NET_PATH = 'nets/cnn/'
+CNN_MODEL_NAME = 'cnn_cifar100_model.tfl'
 
 # define how long network should train before checking accuracy
-EPISODE_SIZE = 1
+EPISODE_SIZE = 3
 
 # validation split: split total training data into smaller 
 # training and validation data.
@@ -52,17 +52,18 @@ validX = validX.reshape([-1, 32, 32, 3])
 def main():
     clear_console()
     
+    # create and train the cifar model
     model = make_cifar_convnet()
     total_time = train_cifar_convnet(model)
-    print(total_time)
     time_stamp = milliseconds_to_timestamp(total_time)
-    print(f"Training time -> {time_stamp}")
+    print(f"Completed training time -> {time_stamp}")
 
     # run all unit tests from cifar_cnn_uts module
     suite = unittest.TestLoader().loadTestsFromModule(cifar_cnn_uts)
     unittest.TextTestRunner(verbosity=2).run(suite)
 
-# recorded training time: 00:00:00.000
+# recorded training time with Tensorboard: 00:00:00.000
+# recorded traingin time w/o Tensorboard: 00:00:00.000
 def train_cifar_convnet(model):
     """ 
     Train and save CIFAR-100 CNN model and return 
@@ -72,11 +73,11 @@ def train_cifar_convnet(model):
     and save. Return the accumulated training time.
     """
     tf.reset_default_graph()
-    model_path = NET_PATH + MODEL_NAME
+    model_path = CNN_NET_PATH + CNN_MODEL_NAME
     training = True
     start_time = int(time.time() * 1000)
-    temp = 1
-    while training:
+    #while training:
+    for i in range(10):
         current_best = 0.0
         fit_tfl_model(
             model,
@@ -84,7 +85,7 @@ def train_cifar_convnet(model):
             trainY,
             testX,
             testY,
-            MODEL_NAME,
+            CNN_MODEL_NAME,
             n_epoch=EPISODE_SIZE)
         next_accuracy = test_tfl_model(
             model, 
@@ -104,15 +105,6 @@ def train_cifar_convnet(model):
             print(f"No accuracy improvement over epoch episode.")
             print(f"Training terminated wtih accuracy: {found_best}")
             print("-------------------------------------------------")  
-
-        if temp == 0:
-            training = False
-            found_best = round(current_best * 100, 2)
-            print("-------------------------------------------------")
-            print(f"No accuracy improvement over epoch episode.")
-            print(f"Training terminated wtih accuracy: {found_best}")
-            print("-------------------------------------------------")
-        temp -= 1
 
     finish_time = int(time.time() * 1000)
     return finish_time - start_time
