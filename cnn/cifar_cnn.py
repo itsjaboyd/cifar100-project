@@ -80,7 +80,8 @@ def make_cifar_convnet():
         optimizer='sgd',
         loss='categorical_crossentropy', 
         learning_rate=0.01)
-    model = tflearn.DNN(network, tensorboard_verbose=3)
+
+    model = tflearn.DNN(network) # tensorboard_verbose=3)
     return model
 
 def load_cifar_convnet(model_path):
@@ -159,7 +160,7 @@ def make_shallower_convnet():
         activation='softmax',
         name='fc_layer_1')
     network = regression(
-        fc_layer_3,
+        fc_layer_1,
         optimizer='sgd',
         loss='categorical_crossentropy',
         learning_rate=0.1)
@@ -251,7 +252,7 @@ def load_example_convnet(model_path):
 
 def fit_tfl_model(model, trainX, trainY, testX, testY, 
     model_name, n_epoch=5, mbs=10):
-    results = model.fit(
+    model.fit(
         trainX, 
         trainY, 
         n_epoch=n_epoch, 
@@ -263,7 +264,6 @@ def fit_tfl_model(model, trainX, trainY, testX, testY,
         batch_size=mbs, 
         run_id=model_name
     )
-    return results
 
 def test_tfl_model(model, X, Y):
     computed_correctly = 0

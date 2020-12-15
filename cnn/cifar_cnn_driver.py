@@ -18,7 +18,7 @@ import matplotlib.pylab as plt
 import tflearn
 import tflearn.datasets.cifar100 as cifar100
 from cnn.cifar_cnn import *
-import cnn.cifar_cnn_uts
+import cnn.cifar_cnn_uts as cnn_unit_tests
 
 ### Silence annoying tensorflow logging statements
 tf.logging.set_verbosity(tf.logging.ERROR)
@@ -48,21 +48,7 @@ trainX = trainX.reshape([-1, 32, 32, 3])
 testX = testX.reshape([-1, 32, 32, 3])
 validX = validX.reshape([-1, 32, 32, 3])
 
-
-def main():
-    clear_console()
-    
-    # create and train the cifar model
-    model = make_cifar_convnet()
-    total_time = train_cifar_convnet(model)
-    time_stamp = milliseconds_to_timestamp(total_time)
-    print(f"Completed training time -> {time_stamp}")
-
-    # run all unit tests from cifar_cnn_uts module
-    suite = unittest.TestLoader().loadTestsFromModule(cifar_cnn_uts)
-    unittest.TextTestRunner(verbosity=2).run(suite)
-
-# recorded training time with Tensorboard: 00:00:00.000
+# recorded training time with Tensorboard: 02:04:46.599
 # recorded traingin time w/o Tensorboard: 00:00:00.000
 def train_cifar_convnet(model):
     """ 
@@ -76,8 +62,7 @@ def train_cifar_convnet(model):
     model_path = CNN_NET_PATH + CNN_MODEL_NAME
     training = True
     start_time = int(time.time() * 1000)
-    #while training:
-    for i in range(10):
+    while training:
         current_best = 0.0
         fit_tfl_model(
             model,
@@ -108,6 +93,27 @@ def train_cifar_convnet(model):
 
     finish_time = int(time.time() * 1000)
     return finish_time - start_time
+
+def train_convnet(model, n_epoch):
+    tf.reset_default_graph()
+    start_time = int(time.time() * 1000)
+    fit_tfl_model(
+        model,
+        trainX,
+        trainY,
+        testX,
+        testY,
+        CNN_MODEL_NAME,
+        n_epoch=n_epoch)
+    finish_time = int(time.time() * 1000)
+    model.save("nets/temp/cnn/test_conv.tfl")
+    return finish_time - start_time
+
+def run_cnn_tests():
+    # run all unit tests from cifar_cnn_uts module
+    suite = unittest.TestLoader().loadTestsFromModule(cnn_unit_tests)
+    unittest.TextTestRunner(verbosity=2).run(suite)
+    
 
 def milliseconds_to_timestamp(mils):
     """
@@ -140,6 +146,3 @@ def milliseconds_to_timestamp(mils):
 def clear_console():
     """Handy multi-platform function that clears the console."""
     os.system('cls' if os.name == 'nt' else 'clear')
-
-if __name__ == "__main__":
-    main()

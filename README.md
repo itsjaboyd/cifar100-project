@@ -1,7 +1,7 @@
 # CIFAR-100 Image Classification Project
 Designing, training, and analyzing convolutional, artificial, and random forest networks
 on the CIFAR-100 image classification dataset. This project makes use of TensorFlow and
-its wrapper TFLearn for these neural network types.
+its wrapper TFLearn for training these neural network types.
 
 ### Accessing the Dataset
 After researching and experimenting with the official downloadable dataset from 
@@ -30,6 +30,10 @@ for testing and statistical analysis. The file `cifar.py` is the overarching dri
 the project is executed. Of course this file `README.md` is for documentation and project 
 details, and the project includes  a `.gitignore` for version control purposes.
 
+The `testing/` directory is purely meant for unit testing purposes in each network type.
+This directly is only used when those tests are called, and to be disregarded when really
+looking at the project as a whole.
+
 ## Running the Project
 There exists an executive driver file `cifar.py` in the top level directory that ties together
 all implementations from each subdirectory. There are multiple options to run the project, and
@@ -38,10 +42,23 @@ viewing purposes is simply loading and testing the already supplied trained netw
 
 1. **Loading and testing trained networks**
 
-This method serves as the primary function of viewing this project. 
+This method serves as the primary function of viewing this project. Upon calling this argument,
+it fetches all saved networks and one by one performs the stastical analysis about them.
+To run this standard project method, you supply running the file with 'standard' or no argument.
+Please note that this project requries Python 3.6+ to run, so be sure to specify the python
+command for which your installation resides (sometimes python3 ... or just regular python ...).
+
+$ `python cifar.py` or `python cifar.py standard` 
 
 2. **Miniature scale network creation and training**
 
+This method serves as a secondary function for viewing this project. After calling this argument
+from the command line, it builds simplified versions of each network architecture and trains each
+for three epochs, then produces the statistics on each trained network. Note that this function
+does not save the networks as this is more of a proof that the project works. Again, in order to
+run this project method, the user must supply the file with the 'create' argument as such:
+
+$ `python cifar.py create`
 
 ## Artificial Neural Networks
 
