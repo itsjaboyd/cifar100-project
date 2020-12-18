@@ -17,28 +17,28 @@ class cifar_ann_uts(unittest.TestCase):
         test_net = make_cifar_artnet()
         self.assertIsNotNone(test_net)
 
-    def test_create_shallow_cnn(self):
+    def test_create_smaller_ann(self):
         test_net = make_smaller_artnet()
         self.assertIsNotNone(test_net)
 
-    def test_create_example_cnn(self):
+    def test_create_larger_ann(self):
         test_net = make_larger_artnet()
         self.assertIsNotNone(test_net)
 
     # tests for loading already created networks
     def test_loading_cifar_ann(self):
         tf.reset_default_graph()
-        new_net = load_cifar_convnet("testing/ann/cc/utc_art.tfl")
+        new_net = load_cifar_convnet("testing/ann/ca/utc_art.tfl")
         self.assertIsNotNone(new_net)
 
-    def test_loading_shallow_cnn(self):
+    def test_loading_smaller_ann(self):
         tf.reset_default_graph()
-        new_net = load_shallower_convnet("testing/ann/sc/uts_art.tfl")
+        new_net = load_shallower_convnet("testing/ann/sa/uts_art.tfl")
         self.assertIsNotNone(new_net)
 
-    def test_loading_example_cnn(self):
+    def test_loading_larger_ann(self):
         tf.reset_default_graph()
-        new_net = load_example_convnet("testing/ann/ec/utl_art.tfl")
+        new_net = load_example_convnet("testing/ann/la/utl_art.tfl")
         self.assertIsNotNone(new_net)
 
 

@@ -15,6 +15,7 @@ import sys
 import unittest
 import tensorflow as tf
 import cnn.cifar_cnn as cnn
+import ann.cifar_ann as ann
 from cnn.cifar_cnn_driver import run_cnn_uts
 from ann.cifar_ann_driver import run_ann_uts
 import utils.utils as utilities
@@ -99,10 +100,32 @@ def test_saved_cnn(model_path, training_time, cnn_type=0):
     for element in tf.all_variables():
         print(element)
 
-def test_saved_ann():
+def test_saved_ann(model_path, training_time, ann_type=0):
     tf.reset_default_graph()
-
+    trained_ann_model = None
+    if ann_type == 0:
+        trained_ann_model = ann.load_cifar_artnet(model_path)
+    elif ann_type == 1:
+        trained_ann_model = ann.load_smaller_artnet(model_path)
+    else:
+        trained_ann_model = ann.load_larger_artnet(model_path)
     print("=============== CIFAR-100 ARTIFICIAL NETWORK STATS ===============")
+    ann_valid_acc = utilities.test_tfl_model(
+        trained_ann_model,
+        utilities.validX,
+        utilities.validY)
+    ann_valid_acc = f"{round(ann_valid_acc * 100, 2)}%"
+    print(f"{'Validation Accuracy': <25} -> {ann_valid_acc: <15}")
+    ann_test_acc = utilities.test_tfl_model(
+        trained_ann_model,
+        utilities.testX,
+        utilities.testY)
+    ann_test_acc = f"{round(ann_test_acc * 100, 2)}%"
+    print(f"{'Testing Accuracy': <25} -> {ann_test_acc: <15}")
+    print(f"{'Network Training Time': <25} -> {training_time: <15}")
+    print("Model Architecture & Summary:")
+    for element in tf.all_variables():
+        print(element)
 
 def test_saved_raf():
     tf.reset_default_graph()

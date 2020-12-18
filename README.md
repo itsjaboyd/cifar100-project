@@ -1,7 +1,8 @@
 # CIFAR-100 Image Classification Project
 Designing, training, and analyzing convolutional, artificial, and random forest networks
 on the CIFAR-100 image classification dataset. This project makes use of TensorFlow and
-its wrapper TFLearn as well as sklearn for training these neural network types.
+its wrapper TFLearn as well as sklearn for training these neural network types. Project
+source code can be found on [Jason Boyd's Github.](https://github.com/itsjaboyd/cifar100-project)
 
 ### Accessing the Dataset
 After researching and experimenting with the official downloadable dataset from 
@@ -91,4 +92,14 @@ saved artificial structure being created and loaded by the `make_cifar_artnet()`
 functions respectively. The other two exhibit larger and smaller artifical structures that are
 created and loaded in again a similiar fashion.
 
-## Randoom Forest Networks
+## Random Forest Networks
+
+## Dependencies and Versions
+
+numpy -> 1.18.1
+scikit-learn -> 0.23.2
+sklearn -> 0.0
+tensorboard -> 1.15.0
+tensorflow -> 1.15.0
+tensorflow-estimator -> 1.15.1
+tflearn -> 0.3.2
