@@ -1,7 +1,7 @@
 # CIFAR-100 Image Classification Project
 Designing, training, and analyzing convolutional, artificial, and random forest networks
 on the CIFAR-100 image classification dataset. This project makes use of TensorFlow and
-its wrapper TFLearn for training these neural network types.
+its wrapper TFLearn as well as sklearn for training these neural network types.
 
 ### Accessing the Dataset
 After researching and experimenting with the official downloadable dataset from 
@@ -30,7 +30,10 @@ for testing and statistical analysis. The file `cifar.py` is the overarching dri
 the project is executed. Of course this file `README.md` is for documentation and project 
 details, and the project includes  a `.gitignore` for version control purposes.
 
-The `testing/` directory is purely meant for unit testing purposes in each network type.
+Convolutional and artificial network functionality is shared between a common utility file
+which is stored under the `utils/` directory. The utility file includes a base python file
+that contains those shared functions and includes basic unit tests for those functions
+as well. The `testing/` directory is purely meant for unit testing purposes in each network type.
 This directly is only used when those tests are called, and to be disregarded when really
 looking at the project as a whole.
 
@@ -47,6 +50,7 @@ it fetches all saved networks and one by one performs the stastical analysis abo
 To run this standard project method, you supply running the file with 'standard' or no argument.
 Please note that this project requries Python 3.6+ to run, so be sure to specify the python
 command for which your installation resides (sometimes python3 ... or just regular python ...).
+Running this command will also run all unit tests associated with each network type.
 
 $ `python cifar.py` or `python cifar.py standard` 
 
@@ -60,8 +64,31 @@ run this project method, the user must supply the file with the 'create' argumen
 
 $ `python cifar.py create`
 
-## Artificial Neural Networks
+3. **Unit Testing Network Types**
+
+This method serves as an addition to this project by running all unit tests from each type of
+network at once. It was originally used just for testing purposes while building the project,
+but as the project grew in size, this function was handy to keep around. Please note again that
+all unit tests are run in addition to running the standard project method. To only run the unit
+tests, run `cifar.py` while supplying the 'testing' argument, as such:
+
+$ `python cifar.py testing`
 
 ## Convolutional Neural Networks
+
+There are three versions of convolutional neural networks that are defined in the CNN subsection.
+First, the best performing saved convolutional architecture is created by the `make_cifar_convnet()`
+and loaded with the `load_cifar_convnet()` functions. The other two are meant for unit and other
+testing purposes including an example and shallower convolutional architecture and created/loaded
+functions in the same fashion as the best performing network. The example network comes straight
+from the lecture notes and homework.
+
+## Artificial Neural Networks
+
+The artificial neural network subsection is very closely related to the convolutional portion.
+There exist three different versions of artificial network structures with the best performing
+saved artificial structure being created and loaded by the `make_cifar_artnet()` and `load_cifar_artnet()`
+functions respectively. The other two exhibit larger and smaller artifical structures that are
+created and loaded in again a similiar fashion.
 
 ## Randoom Forest Networks

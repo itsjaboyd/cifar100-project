@@ -14,9 +14,10 @@
 import sys
 import unittest
 import tensorflow as tf
-from cnn.cifar_cnn import *
+import cnn.cifar_cnn as cnn
 from cnn.cifar_cnn_driver import run_cnn_uts
-from utils.utils import *
+from ann.cifar_ann_driver import run_ann_uts
+import utils.utils as utilities
 import utils.utils_uts as utils_uts
 
 CNN_MODEL = 'nets/cnn/cnn_cifar100_model.tfl'
@@ -24,7 +25,7 @@ ANN_MODEL = 'nets/ann/ann_cifar100_model.tfl'
 RAF_MODEL = 'nets/raf/raf_cifar100_model.tfl'
 
 def main(): 
-    clear_console()   
+    utilities.clear_console()   
     arg = sys.argv.pop(1) if len(sys.argv) > 1 else 'standard'
     if arg == 'standard':
         load_test_trained_networks()
@@ -48,17 +49,21 @@ def load_test_trained_networks():
     print("\nLoading and testing random forest network . . .")
     test_saved_raf()
     print("\nLoading and testing of networks completed.")
+
+    # run all unit tests after testing of saved networks is complete.
+    print("Running associated unit tests . . .")
+    run_all_uts()
     
 def create_train_mini_networks():
     # create miniature convolutional network and train
     print("Creating and training convolutional network at 3 epochs . . .")
-    mini_cnn = make_shallower_convnet()
-    total_time = train_network(
+    mini_cnn = cnn.make_shallower_convnet()
+    total_time = utilities.train_network(
         mini_cnn, 
         "temp_net", 
         "testing/temp/temp_net.tfl", 
         n_epoch=3)
-    total_time = milliseconds_to_timestamp(total_time)
+    total_time = utilities.milliseconds_to_timestamp(total_time)
     test_saved_cnn(
         "testing/temp/temp_net.tfl", 
         total_time, 
@@ -71,22 +76,22 @@ def test_saved_cnn(model_path, training_time, cnn_type=0):
     tf.reset_default_graph()
     trained_cnn_model = None
     if cnn_type == 0:
-        trained_cnn_model = load_cifar_convnet(model_path)
+        trained_cnn_model = cnn.load_cifar_convnet(model_path)
     elif cnn_type == 1:
-        trained_cnn_model = load_shallower_convnet(model_path)
+        trained_cnn_model = cnn.load_shallower_convnet(model_path)
     else:
-        trained_cnn_model = load_example_convnet(model_path)
+        trained_cnn_model = cnn.load_example_convnet(model_path)
     print("============= CIFAR-100 CONVOLUTIONAL NETWORK STATS =============")
-    cnn_valid_acc = test_tfl_model(
+    cnn_valid_acc = utilities.test_tfl_model(
         trained_cnn_model, 
-        validX, 
-        validY)
+        utilities.validX, 
+        utilities.validY)
     cnn_valid_acc = f"{round(cnn_valid_acc * 100, 2)}%"
     print(f"{'Validation Accuracy': <25} -> {cnn_valid_acc: <15}")
-    cnn_test_acc = test_tfl_model(
+    cnn_test_acc = utilities.test_tfl_model(
         trained_cnn_model,
-        testX,
-        testY)
+        utilities.testX,
+        utilities.testY)
     cnn_test_acc = f"{round(cnn_test_acc * 100, 2)}%"
     print(f"{'Testing Accuracy': <25} -> {cnn_test_acc: <15}")
     print(f"{'Network Training Time': <25} -> {training_time: <15}")
@@ -124,7 +129,9 @@ def print_useful_message(arg):
     print("1. 'standard' or no argument")
     print("Load and test supplied best performing neural networks.\n")
     print("2. 'create' argument")
-    print("Create and breifly train small versions of neural networks.")
+    print("Create and breifly train small versions of neural networks.\n")
+    print("3. 'testing' argument")
+    print("Run all unit tests associated with every type of network.")
 
 if __name__ == "__main__":
     main()

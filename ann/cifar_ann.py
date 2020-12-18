@@ -40,7 +40,10 @@ def load_smaller_artnet():
     pass
 
 def make_larger_artnet():
-    """Just a larger ANN architecture for testing purposes."""
+    """
+    Just a larger ANN architecture for testing purposes
+    as with the smaller artificial network architecture.
+    """
     pass
 
 def load_larger_artnet():
