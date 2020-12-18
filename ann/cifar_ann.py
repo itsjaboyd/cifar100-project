@@ -44,7 +44,7 @@ def make_cifar_artnet():
         loss='categorical_crossentropy',
         learning_rate=0.01)
 
-    model = tflearn.DNN(network)  # tensorboard_verbose=3)
+    model = tflearn.DNN(network, tensorboard_verbose=3)
     return model
 
 def load_cifar_artnet(model_path):
