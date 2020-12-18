@@ -14,17 +14,6 @@ import cnn.cifar_cnn_driver as cdr
 CNN_TESTING_RANGE = 1000
 
 class cifar_cnn_uts(unittest.TestCase):
-
-    # tests for milliseconds to timestamp function
-    def test_milliseconds_to_timestamp(self):
-        mils = cdr.milliseconds_to_timestamp(999)
-        self.assertEqual(mils, "00:00:00.999")
-        secs = cdr.milliseconds_to_timestamp(1001)
-        self.assertEqual(secs, "00:00:01.001")
-        mins = cdr.milliseconds_to_timestamp(61123)
-        self.assertEqual(mins, "00:01:01.123")
-        hour = cdr.milliseconds_to_timestamp(3612345)
-        self.assertEqual(hour, "01:00:12.345")
     
     # tests for returning newly created networks
     def test_create_cifar_cnn(self):

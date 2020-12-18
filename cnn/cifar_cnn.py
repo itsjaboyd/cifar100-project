@@ -249,26 +249,3 @@ def load_example_convnet(model_path):
     model = tflearn.DNN(fc_layer_2)
     model.load(model_path)
     return model
-
-def fit_tfl_model(model, trainX, trainY, testX, testY, 
-    model_name, n_epoch=5, mbs=10):
-    model.fit(
-        trainX, 
-        trainY, 
-        n_epoch=n_epoch, 
-        shuffle=True, 
-        validation_set=(
-            testX, 
-            testY), 
-        show_metric=True, 
-        batch_size=mbs, 
-        run_id=model_name
-    )
-
-def test_tfl_model(model, X, Y):
-    computed_correctly = 0
-    for i in range(len(X)):
-        prediction = model.predict(X[i].reshape([-1, 32, 32, 3]))
-        if np.argmax(prediction, axis=1)[0] == np.argmax(Y[i]):
-            computed_correctly += 1
-    return computed_correctly / len(X)

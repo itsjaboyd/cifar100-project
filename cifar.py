@@ -12,7 +12,12 @@
 #=================================================================
 
 import sys
-from cnn.cifar_cnn_driver import *
+import unittest
+import tensorflow as tf
+from cnn.cifar_cnn import *
+from cnn.cifar_cnn_driver import run_cnn_uts
+from utils.utils import *
+import utils.utils_uts as utils_uts
 
 CNN_MODEL = 'nets/cnn/cnn_cifar100_model.tfl'
 ANN_MODEL = 'nets/ann/ann_cifar100_model.tfl'
@@ -26,7 +31,7 @@ def main():
     elif arg == 'create':
         create_train_mini_networks()
     elif arg == 'testing':
-        run_cnn_tests()
+        run_all_uts()
     elif arg == 'pass':
         pass
     else:
@@ -35,8 +40,8 @@ def main():
 def load_test_trained_networks():
     print("Loading and testing convolutional neural network . . .")
     test_saved_cnn(
-        "nets/cnn/test_conv.tfl",
-        "02:04:46.599",
+        CNN_MODEL,
+        "01:04:41.953",
         cnn_type=0)
     print("\nLoading and testing artificial neural network . . .")
     test_saved_ann()
@@ -44,17 +49,23 @@ def load_test_trained_networks():
     test_saved_raf()
     print("\nLoading and testing of networks completed.")
     
-
 def create_train_mini_networks():
     # create miniature convolutional network and train
-    print("Creating and training network at 3 epochs . . .")
+    print("Creating and training convolutional network at 3 epochs . . .")
     mini_cnn = make_shallower_convnet()
-    total_time = train_convnet(mini_cnn, 3)
+    total_time = train_network(
+        mini_cnn, 
+        "temp_net", 
+        "testing/temp/temp_net.tfl", 
+        n_epoch=3)
     total_time = milliseconds_to_timestamp(total_time)
     test_saved_cnn(
-        "nets/temp/cnn/test_conv.tfl", 
+        "testing/temp/temp_net.tfl", 
         total_time, 
         cnn_type=1)
+    
+    print("Creating and training artificial network at 3 epochs . . .")
+    print("Creating and training random forest at 3 epochs . . .")
 
 def test_saved_cnn(model_path, training_time, cnn_type=0):
     tf.reset_default_graph()
@@ -65,13 +76,19 @@ def test_saved_cnn(model_path, training_time, cnn_type=0):
         trained_cnn_model = load_shallower_convnet(model_path)
     else:
         trained_cnn_model = load_example_convnet(model_path)
-    cnn_acc = test_tfl_model(
+    print("============= CIFAR-100 CONVOLUTIONAL NETWORK STATS =============")
+    cnn_valid_acc = test_tfl_model(
         trained_cnn_model, 
         validX, 
         validY)
-    cnn_acc = f"{round(cnn_acc * 100, 2)}%"
-    print("============= CIFAR-100 CONVOLUTIONAL NETWORK STATS =============")
-    print(f"{'Validation Accuracy': <25} -> {cnn_acc: <15}")
+    cnn_valid_acc = f"{round(cnn_valid_acc * 100, 2)}%"
+    print(f"{'Validation Accuracy': <25} -> {cnn_valid_acc: <15}")
+    cnn_test_acc = test_tfl_model(
+        trained_cnn_model,
+        testX,
+        testY)
+    cnn_test_acc = f"{round(cnn_test_acc * 100, 2)}%"
+    print(f"{'Testing Accuracy': <25} -> {cnn_test_acc: <15}")
     print(f"{'Network Training Time': <25} -> {training_time: <15}")
     print("Model Architecture & Summary:")
     for element in tf.all_variables():
@@ -86,6 +103,19 @@ def test_saved_raf():
     tf.reset_default_graph()
 
     print("================= CIFAR-100 RANDOM FOREST STATS =================")
+
+def run_all_uts():
+    print("> > > > > > > > > > > > UTILS UNIT TESTS < < < < < < < < < < < <")
+    run_cnn_uts()
+    print("> > > > > > > > > > > > > CNN UNIT TESTS < < < < < < < < < < < < <")
+    run_utils_uts()
+    print("> > > > > > > > > > > > > ANN UNIT TESTS < < < < < < < < < < < < <")
+    print("> > > > > > > > > > > > > RAF UNIT TESTS < < < < < < < < < < < < <")
+
+def run_utils_uts():
+    # run all unit tests from utils_uts module
+    suite = unittest.TestLoader().loadTestsFromModule(utils_uts)
+    unittest.TextTestRunner(verbosity=2).run(suite)
 
 def print_useful_message(arg):
     print("-------------------- PROJECT RUN UNSUCCESSFUL --------------------")

@@ -1,0 +1,2 @@
+model_checkpoint_path: "/Users/jason/LocalProjects/cifar100-project/nets/cnn/cnn_cifar100_model.tfl"
+all_model_checkpoint_paths: "/Users/jason/LocalProjects/cifar100-project/nets/cnn/cnn_cifar100_model.tfl"
