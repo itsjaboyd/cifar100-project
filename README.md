@@ -47,9 +47,9 @@ viewing purposes is simply loading and testing the already supplied trained netw
 1. **Loading and testing trained networks**
 
 This method serves as the primary function of viewing this project. Upon calling this argument,
-it fetches all saved networks and one by one performs the stastical analysis about them.
+it fetches all saved networks and one by one performs the statistical analysis about them.
 To run this standard project method, you supply running the file with 'standard' or no argument.
-Please note that this project requries Python 3.6+ to run, so be sure to specify the python
+Please note that this project requires Python 3.6+ to run, so be sure to specify the python
 command for which your installation resides (sometimes python3 ... or just regular python ...).
 Running this command will also run all unit tests associated with each network type.
 
@@ -89,17 +89,22 @@ from the lecture notes and homework.
 The artificial neural network subsection is very closely related to the convolutional portion.
 There exist three different versions of artificial network structures with the best performing
 saved artificial structure being created and loaded by the `make_cifar_artnet()` and `load_cifar_artnet()`
-functions respectively. The other two exhibit larger and smaller artifical structures that are
-created and loaded in again a similiar fashion.
+functions respectively. The other two exhibit larger and smaller artificial structures that are
+created and loaded in again a similar fashion.
 
 ## Random Forest Networks
 
 ## Dependencies and Versions
 
-numpy -> 1.18.1
-scikit-learn -> 0.23.2
-sklearn -> 0.0
-tensorboard -> 1.15.0
-tensorflow -> 1.15.0
-tensorflow-estimator -> 1.15.1
-tflearn -> 0.3.2
+numpy -> 1.18.1\
+scikit-learn -> 0.23.2\
+sklearn -> 0.0\
+tensorboard -> 1.15.0\
+tensorflow -> 1.15.0\
+tensorflow-estimator -> 1.15.1\
+tflearn -> 0.3.2\
+
+These are the dependencies and packages that I found that could apply to the project. I downloaded
+them using `pip install package` where package is the package to be downloaded. To find the
+comprehensive currently installed package list for your installation of Python 3, use the command
+`pip freeze` or `pip3 freeze` depending on which command uses your Python 3 installation.
