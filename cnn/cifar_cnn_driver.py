@@ -27,9 +27,7 @@ CNN_MODEL_NAME = 'cnn_cifar100_model.tfl'
 # define how long network should train before checking accuracy
 EPISODE_SIZE = 5
 
-# recorded training time with Tensorboard: 02:04:46.599
-# recorded traingin time w/o Tensorboard: 01:04:41.953
-
+# recorded training time with Tensorboard: 04:19:31.953
 def run_cnn_uts():
     # run all unit tests from cifar_cnn_uts module
     suite = unittest.TestLoader().loadTestsFromModule(cnn_unit_tests)

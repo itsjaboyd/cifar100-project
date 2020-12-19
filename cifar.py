@@ -18,6 +18,7 @@ import cnn.cifar_cnn as cnn
 import ann.cifar_ann as ann
 from cnn.cifar_cnn_driver import run_cnn_uts
 from ann.cifar_ann_driver import run_ann_uts
+from raf.cifar_raf_driver import run_raf_uts
 import utils.utils as utilities
 import utils.utils_uts as utils_uts
 
@@ -43,10 +44,13 @@ def load_test_trained_networks():
     print("Loading and testing convolutional neural network . . .")
     test_saved_cnn(
         CNN_MODEL,
-        "01:04:41.953",
+        "04:19:31.953",
         cnn_type=0)
     print("\nLoading and testing artificial neural network . . .")
-    test_saved_ann()
+    test_saved_ann(
+        ANN_MODEL,
+        "tOtAl tImE",
+        ann_type=0)
     print("\nLoading and testing random forest network . . .")
     test_saved_raf()
     print("\nLoading and testing of networks completed.")
@@ -71,7 +75,7 @@ def create_train_mini_networks():
         cnn_type=1)
     
     print("Creating and training artificial network at 3 epochs . . .")
-    print("Creating and training random forest at 3 epochs . . .")
+    print("Creating and training random forest . . .")
 
 def test_saved_cnn(model_path, training_time, cnn_type=0):
     tf.reset_default_graph()
@@ -129,16 +133,18 @@ def test_saved_ann(model_path, training_time, ann_type=0):
 
 def test_saved_raf():
     tf.reset_default_graph()
-
     print("================= CIFAR-100 RANDOM FOREST STATS =================")
+    print("Could not test any saved random forest networks.")
 
 def run_all_uts():
     print("> > > > > > > > > > > > UTILS UNIT TESTS < < < < < < < < < < < <")
-    run_cnn_uts()
-    print("> > > > > > > > > > > > > CNN UNIT TESTS < < < < < < < < < < < < <")
     run_utils_uts()
+    print("> > > > > > > > > > > > > CNN UNIT TESTS < < < < < < < < < < < < <")
+    run_cnn_uts()
     print("> > > > > > > > > > > > > ANN UNIT TESTS < < < < < < < < < < < < <")
+    run_ann_uts()
     print("> > > > > > > > > > > > > RAF UNIT TESTS < < < < < < < < < < < < <")
+    run_raf_uts()
 
 def run_utils_uts():
     # run all unit tests from utils_uts module

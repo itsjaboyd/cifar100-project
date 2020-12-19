@@ -9,7 +9,6 @@ import unittest
 import tensorflow as tf
 from ann.cifar_ann import *
 
-
 class cifar_ann_uts(unittest.TestCase):
 
     # tests for returning newly created networks
@@ -28,17 +27,17 @@ class cifar_ann_uts(unittest.TestCase):
     # tests for loading already created networks
     def test_loading_cifar_ann(self):
         tf.reset_default_graph()
-        new_net = load_cifar_convnet("testing/ann/ca/utc_art.tfl")
+        new_net = load_cifar_artnet("testing/ann/ca/utc_art.tfl")
         self.assertIsNotNone(new_net)
 
     def test_loading_smaller_ann(self):
         tf.reset_default_graph()
-        new_net = load_shallower_convnet("testing/ann/sa/uts_art.tfl")
+        new_net = load_smaller_artnet("testing/ann/sa/uts_art.tfl")
         self.assertIsNotNone(new_net)
 
     def test_loading_larger_ann(self):
         tf.reset_default_graph()
-        new_net = load_example_convnet("testing/ann/la/utl_art.tfl")
+        new_net = load_larger_artnet("testing/ann/la/utl_art.tfl")
         self.assertIsNotNone(new_net)
 
 

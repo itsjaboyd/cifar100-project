@@ -38,6 +38,12 @@ as well. The `testing/` directory is purely meant for unit testing purposes in e
 This directly is only used when those tests are called, and to be disregarded when really
 looking at the project as a whole.
 
+### Project Report
+
+The project report is saved as `report.pdf` and `report.docx` inside the top-most project
+directory. The purpose of the project report is to show the findings, successes and failures, 
+the program process, and reflections from building the project and training those networks.
+
 ## Running the Project
 There exists an executive driver file `cifar.py` in the top level directory that ties together
 all implementations from each subdirectory. There are multiple options to run the project, and
@@ -93,6 +99,15 @@ functions respectively. The other two exhibit larger and smaller artificial stru
 created and loaded in again a similar fashion.
 
 ## Random Forest Networks
+
+Unfortunately due to the time constraints and effort the rest of the project has taken in development
+and training each network thus far, implementing the random forest section of this project could
+not be reached. Everything was laid out for development, but again there was not enough time left to
+experiment in that area. While the required data for analysis will not be presented in the project, there
+will be estimations whereas random forests might compare to the trained convolutional and artificial
+neural networks on CIFAR-100. Beyond the scope of grading and submission of this project, development
+will most likely continue as results of the random forests would provide valuable insight into each
+of the image classification network types.
 
 ## Dependencies and Versions
 
