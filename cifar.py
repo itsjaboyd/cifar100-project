@@ -44,12 +44,12 @@ def load_test_trained_networks():
     print("Loading and testing convolutional neural network . . .")
     test_saved_cnn(
         CNN_MODEL,
-        "04:19:31.953",
+        "06:19:31.953",
         cnn_type=0)
     print("\nLoading and testing artificial neural network . . .")
     test_saved_ann(
         ANN_MODEL,
-        "tOtAl tImE",
+        "02:52:23.717",
         ann_type=0)
     print("\nLoading and testing random forest network . . .")
     test_saved_raf()
@@ -63,19 +63,33 @@ def create_train_mini_networks():
     # create miniature convolutional network and train
     print("Creating and training convolutional network at 3 epochs . . .")
     mini_cnn = cnn.make_shallower_convnet()
-    total_time = utilities.train_network(
+    total_time_cnn = utilities.train_network(
         mini_cnn, 
         "temp_net", 
-        "testing/temp/temp_net.tfl", 
+        "testing/temp/cnn/temp_net.tfl", 
         n_epoch=3)
-    total_time = utilities.milliseconds_to_timestamp(total_time)
+    total_time_cnn = utilities.milliseconds_to_timestamp(total_time_cnn)
     test_saved_cnn(
-        "testing/temp/temp_net.tfl", 
-        total_time, 
+        "testing/temp/cnn/temp_net.tfl", 
+        total_time_cnn, 
         cnn_type=1)
     
-    print("Creating and training artificial network at 3 epochs . . .")
-    print("Creating and training random forest . . .")
+    tf.reset_default_graph()
+    print("\nCreating and training artificial network at 3 epochs . . .")
+    mini_ann = ann.make_smaller_artnet()
+    total_time_ann = utilities.train_network(
+        mini_ann,
+        "temp_net",
+        "testing/temp/ann/temp_net.tfl",
+        n_epoch=3)
+    total_time_ann = utilities.milliseconds_to_timestamp(total_time_ann)
+    test_saved_ann(
+        "testing/temp/ann/temp_net.tfl",
+        total_time_ann,
+        ann_type=1)
+
+    print("\nCreating and training random forest . . .")
+    print("Could not create and train random forest.")
 
 def test_saved_cnn(model_path, training_time, cnn_type=0):
     tf.reset_default_graph()

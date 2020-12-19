@@ -1,0 +1,2 @@
+model_checkpoint_path: "/Users/jason/LocalProjects/cifar100-project/testing/ann/ca/utc_art.tfl"
+all_model_checkpoint_paths: "/Users/jason/LocalProjects/cifar100-project/testing/ann/ca/utc_art.tfl"

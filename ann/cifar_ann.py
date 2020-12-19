@@ -44,7 +44,7 @@ def make_cifar_artnet():
         loss='categorical_crossentropy',
         learning_rate=0.01)
 
-    model = tflearn.DNN(network, tensorboard_verbose=3)
+    model = tflearn.DNN(network)
     return model
 
 def load_cifar_artnet(model_path):
@@ -161,7 +161,7 @@ def make_larger_artnet():
 def load_larger_artnet(model_path):
     input_layer = input_data(shape=[None, 32, 32, 3])
     fc_layer_1 = fully_connected(
-        input_data,
+        input_layer,
         1024,
         activation='relu',
         name='fc_layer_1')
